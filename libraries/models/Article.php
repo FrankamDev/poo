@@ -1,9 +1,10 @@
 <?php
 
 require_once('./libraries/database.php');
+
 class Article
 {
-  public function findAllArticles()
+  public function findAll()
   {
     $pdo = getPdo();
     $resultats = $pdo->query('SELECT * FROM articles ORDER BY created_at DESC');
@@ -13,7 +14,7 @@ class Article
     return $articles;
   }
 
-  public function findArticle(int $id)
+  public function find(int $id)
   {
     $pdo = getPdo();
     $query = $pdo->prepare("SELECT * FROM articles WHERE id = :article_id");
@@ -27,7 +28,7 @@ class Article
     return $article;
   }
 
-  public function deleArticle(int $id): void
+  public function delete(int $id): void
   {
     $pdo = getPdo();
     $query = $pdo->prepare('DELETE FROM articles WHERE id = :id');

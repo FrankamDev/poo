@@ -1,14 +1,13 @@
 <?php
 require_once('./libraries/database.php');
 require_once('./libraries/utils.php');
+require_once('./libraries/models/Article.php');
 
-$pdo = getPdo();
+$model = new Article();
 
-$articles =findAllArticles();
 
-/**
- * 3. Affichage
- */
+$articles = $model->findAllArticles($article_id);
+
 $pageTitle = "Accueil";
 
 render('articles/index', compact('pageTitle','articles'));
