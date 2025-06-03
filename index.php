@@ -1,13 +1,8 @@
 <?php
-require_once('./libraries/database.php');
-require_once('./libraries/utils.php');
-require_once('./libraries/models/Article.php');
-
-$model = new Article();
 
 
-$articles = $model->findAll();
+require_once('./libraries/controllers/Article.php');
 
-$pageTitle = "Accueil";
 
-render('articles/index', compact('pageTitle','articles'));
+$controller = new \Controllers\Article();
+$controller->index();

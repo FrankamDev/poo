@@ -1,10 +1,11 @@
 <?php
+namespace Models;
 
 require_once('./libraries/models/Model.php');
 
 class Comment extends Model
 {
-
+protected $table = "comments";
   public function findAllWithArticle(int $id): array
   {
 
@@ -20,14 +21,6 @@ class Comment extends Model
     $query = $this->pdo->prepare('INSERT INTO comments SET author = :author, content = :content, article_id = :article_id, created_at = NOW()');
     $query->execute(compact('author', 'content', 'article_id'));
   }
-
-  public function delete(int $id)
-  {
-
-    $query = $pdo->prepare('DELETE FROM comments WHERE id = :id');
-    $query->execute(['id' => $id]);
-  }
-
   public function find(int $id)
   {
 
@@ -36,4 +29,12 @@ class Comment extends Model
     $comment  = $query->fetch();
     return $comment;
   }
+  public function delete(int $id)
+  {
+
+    $query = $this->pdo->prepare('DELETE FROM comments WHERE id = :id');
+    $query->execute(['id' => $id]);
+  }
+
+ 
 }
