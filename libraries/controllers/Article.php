@@ -7,14 +7,24 @@ require_once('./libraries/models/Article.php');
 require_once('./libraries/models/Comment.php');
 
 
+
+
 class Article
 {
+
+  protected $model;
+
+  public function __construct(){
+    $this->model = new \Models\Article();
+  }
+ 
+
   public function index() {
 
-    $model = new \Models\Article();
+   
 
 
-    $articles = $model->findAll("created_at DESC");
+    $articles = $this->model->findAll("created_at DESC");
 
     $pageTitle = "Accueil";
 
@@ -22,7 +32,7 @@ class Article
   }
   public function show(){
     $article_id = null;
-    $articleModel = new \Models\Article();
+    
     $commentModel = new \Models\Comment();
     if (!empty($_GET['id']) && ctype_digit($_GET['id'])) {
       $article_id = $_GET['id'];
@@ -32,7 +42,7 @@ class Article
       die("Vous devez préciser un paramètre `id` dans l'URL !");
     }
 
-    $article = $articleModel->find($article_id);
+    $article = $this->model->find($article_id);
 
     $commentaires = $commentModel->findAllWithArticle($article_id);
 
@@ -41,5 +51,23 @@ class Article
 
     render('articles/show', compact('pageTitle', 'article', 'commentaires', 'article_id'));
   }
-  public function delete() {}
+  public function delete() {
+    if (empty($_GET['id']) || !ctype_digit($_GET['id'])) {
+      die("Ho ?! Tu n'as pas précisé l'id de l'article !");
+    }
+
+    $id = $_GET['id'];
+
+    /**  
+     * 3. Vérification que l'article existe bel et bien
+     */
+    $article = $this->model->find($id);
+
+    if (!$article) {
+      die("L'article $id n'existe pas, vous ne pouvez donc pas le supprimer !");
+    }
+
+    $this->model->delete($id);
+    redirect('index.php');
+  }
 }
