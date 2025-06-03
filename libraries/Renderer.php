@@ -1,8 +1,8 @@
-<?php
+<?php 
 
-// Fonction pour afficher une vue avec layout
-function render(string $path, array $variables = []) 
-{
+class Renderer {
+ public static function render(string $path, array $variables = [])
+  {
     // Crée des variables à partir des clés du tableau
     extract($variables);
 
@@ -17,11 +17,9 @@ function render(string $path, array $variables = [])
 
     // Inclut le layout principal qui utilise $pageContent
     require('templates/layout.html.php');
-}
+  }
 
-// Fonction de redirection
-function redirect(string $url): void 
-{
-    header('Location: ' . $url);
-    exit;
+  // Fonction de redirection
+
+
 }

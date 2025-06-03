@@ -2,19 +2,9 @@
 
 namespace Controllers;
 
-
-require_once('./libraries/utils.php');
-require_once('./libraries/models/Comment.php');
-require_once('./libraries/models/Article.php');
-
-class Comment
+class Comment extends Controller
 {
-  protected $model;
-
-  public function __construct()
-  {
-    $this->model = new \Models\Comment();
-  }
+  protected $modelName = \Models\Comment::class;
 
   public function insert()
   {
@@ -57,7 +47,7 @@ class Comment
     $this->model->insert($author, $content, $article_id);
 
 
-    redirect("article.php?id=" . $article_id);
+    \Http::redirect("article.php?id=" . $article_id);
   }
   public function delete()
   {
@@ -79,6 +69,6 @@ class Comment
 
     $this->model->delete($id);
 
-    redirect("article.php?id=" . $article_id);
+    \Http::redirect("article.php?id=" . $article_id);
   }
 }

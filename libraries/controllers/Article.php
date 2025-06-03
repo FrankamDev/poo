@@ -2,33 +2,27 @@
 
 namespace Controllers;
 
-require_once('./libraries/utils.php');
+require_once('./libraries/Renderer.php');
+
+use Libraries\Renderer;
+
+require_once('./libraries/controllers/Controller.php');
 require_once('./libraries/models/Article.php');
 require_once('./libraries/models/Comment.php');
 
 
 
 
-class Article
+class Article extends Controller
 {
-
-  protected $model;
-
-  public function __construct(){
-    $this->model = new \Models\Article();
-  }
- 
+protected $modelName = \Models\Article::class;
 
   public function index() {
-
-   
-
-
     $articles = $this->model->findAll("created_at DESC");
 
     $pageTitle = "Accueil";
 
-    render('articles/index', compact('pageTitle', 'articles'));
+    \Renderer::render('articles/index', compact('pageTitle', 'articles'));
   }
   public function show(){
     $article_id = null;
@@ -49,7 +43,7 @@ class Article
 
     $pageTitle = $article['title'];
 
-    render('articles/show', compact('pageTitle', 'article', 'commentaires', 'article_id'));
+    \Renderer::render('articles/show', compact('pageTitle', 'article', 'commentaires', 'article_id'));
   }
   public function delete() {
     if (empty($_GET['id']) || !ctype_digit($_GET['id'])) {
@@ -68,6 +62,6 @@ class Article
     }
 
     $this->model->delete($id);
-    redirect('index.php');
+    \Http::redirect('index.php');
   }
 }
