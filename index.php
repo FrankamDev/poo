@@ -6,7 +6,7 @@ require_once('./libraries/models/Article.php');
 $model = new Article();
 
 
-$articles = $model->findAllArticles($article_id);
+$articles = $model->findAllArticles();
 
 $pageTitle = "Accueil";
 

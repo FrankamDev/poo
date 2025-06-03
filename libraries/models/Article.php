@@ -13,7 +13,6 @@ class Article
 
     return $articles;
   }
-
   public function find(int $id)
   {
     $pdo = getPdo();
