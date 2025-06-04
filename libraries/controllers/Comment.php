@@ -47,7 +47,7 @@ class Comment extends Controller
     $this->model->insert($author, $content, $article_id);
 
 
-    \Http::redirect("article.php?id=" . $article_id);
+    \Http::redirect("index.php?controller=article&task=show&id=" . $article_id);
   }
   public function delete()
   {
@@ -69,6 +69,6 @@ class Comment extends Controller
 
     $this->model->delete($id);
 
-    \Http::redirect("article.php?id=" . $article_id);
+    \Http::redirect("index.php?controller=article&task=show&id=" . $article_id);
   }
 }
